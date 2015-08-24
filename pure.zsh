@@ -87,7 +87,8 @@ prompt_pure_check_git_arrows() {
 prompt_pure_preexec() {
 	prompt_pure_cmd_timestamp=$EPOCHSECONDS
 
-	if [[ -z "${MANUAL_TERM_TITLE}" ]]; then
+	zstyle -s ':pure-prompt' term-title 'term_title'
+	if [[ "$term_title" == (auto|) ]]; then
 		# tell the terminal we are setting the title
 		print -Pn "\e]0;"
 		# show hostname if connected through ssh
@@ -192,7 +193,8 @@ prompt_pure_precmd() {
 	# check for git arrows
 	prompt_pure_check_git_arrows
 
-	if [[ -z "${MANUAL_TERM_TITLE}" ]]; then
+	zstyle -s ':pure-prompt' term-title 'term_title'
+	if [[ "$term_title" == (auto|) ]]; then
 		# tell the terminal we are setting the title
 		print -Pn "\e]0;"
 		# show hostname if connected through ssh
@@ -314,6 +316,11 @@ prompt_pure_setup() {
 	autoload -Uz add-zsh-hook
 	autoload -Uz vcs_info
 	autoload -Uz async && async
+
+	# By default, the terminal title is automatically set.
+	if zstyle -t ':pure-prompt' term-title; then
+		zstyle ':pure-prompt' term-title auto
+	fi
 
 	add-zsh-hook precmd prompt_pure_precmd
 	add-zsh-hook preexec prompt_pure_preexec

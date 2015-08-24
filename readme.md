@@ -111,10 +111,12 @@ Defines the git up arrow symbol. The default value is `⇡`.
 
 ## Dynamic options
 
-### `MANUAL_TERM_TITLE`
+### Terminal title
 
-When it's present, the terminal title will be set manually
-Otherwise the terminal title will be automatically set (default behaviour).
+* Set the terminal title manually: `zstyle ':pure-prompt' term-title manual`
+* To restore automatic behaviour: `zstyle ':pure-prompt' term-title auto`
+
+By default the terminal title will be automatically set (default behaviour).
 
 ## Example
 
