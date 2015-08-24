@@ -88,7 +88,7 @@ prompt_pure_preexec() {
 	prompt_pure_cmd_timestamp=$EPOCHSECONDS
 
 	zstyle -s ':pure-prompt' term-title 'term_title'
-	if [[ "$term_title" == (auto|) ]]; then
+	if [[ "${term_title}" == "auto" ]]; then
 		# tell the terminal we are setting the title
 		print -Pn "\e]0;"
 		# show hostname if connected through ssh
@@ -194,7 +194,7 @@ prompt_pure_precmd() {
 	prompt_pure_check_git_arrows
 
 	zstyle -s ':pure-prompt' term-title 'term_title'
-	if [[ "$term_title" == (auto|) ]]; then
+	if [[ "${term_title}" == "auto" ]]; then
 		# tell the terminal we are setting the title
 		print -Pn "\e]0;"
 		# show hostname if connected through ssh
@@ -318,7 +318,8 @@ prompt_pure_setup() {
 	autoload -Uz async && async
 
 	# By default, the terminal title is automatically set.
-	if zstyle -t ':pure-prompt' term-title; then
+	zstyle -s ':pure-prompt' term-title 'term_title'
+	if [[ -z "${term_title}" ]]; then
 		zstyle ':pure-prompt' term-title auto
 	fi
 
