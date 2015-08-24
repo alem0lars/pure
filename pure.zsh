@@ -87,14 +87,16 @@ prompt_pure_check_git_arrows() {
 prompt_pure_preexec() {
 	prompt_pure_cmd_timestamp=$EPOCHSECONDS
 
-	# tell the terminal we are setting the title
-	print -Pn "\e]0;"
-	# show hostname if connected through ssh
-	[[ "$SSH_CONNECTION" != '' ]] && print -Pn "(%m) "
-	# shows the current dir and executed command in the title when a process is active
-	# (use print -r to disable potential evaluation of escape characters in cmd)
-	print -nr "$PWD:t: $2"
-	print -Pn "\a"
+	if [[ -z "${MANUAL_TERM_TITLE}" ]]; then
+		# tell the terminal we are setting the title
+		print -Pn "\e]0;"
+		# show hostname if connected through ssh
+		[[ "$SSH_CONNECTION" != '' ]] && print -Pn "(%m) "
+		# shows the current dir and executed command in the title when a process is active
+		# (use print -r to disable potential evaluation of escape characters in cmd)
+		print -nr "$PWD:t: $2"
+		print -Pn "\a"
+  fi
 }
 
 # string length ignoring ansi escapes
@@ -190,12 +192,14 @@ prompt_pure_precmd() {
 	# check for git arrows
 	prompt_pure_check_git_arrows
 
-	# tell the terminal we are setting the title
-	print -Pn "\e]0;"
-	# show hostname if connected through ssh
-	[[ "$SSH_CONNECTION" != '' ]] && print -Pn "(%m) "
-	# shows the full path in the title
-	print -Pn "%~\a"
+	if [[ -z "${MANUAL_TERM_TITLE}" ]]; then
+		# tell the terminal we are setting the title
+		print -Pn "\e]0;"
+		# show hostname if connected through ssh
+		[[ "$SSH_CONNECTION" != '' ]] && print -Pn "(%m) "
+		# shows the full path in the title
+		print -Pn "%~\a"
+	fi
 
 	# get vcs info
 	vcs_info

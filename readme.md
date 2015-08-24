@@ -109,6 +109,13 @@ Defines the git down arrow symbol. The default value is `⇣`.
 
 Defines the git up arrow symbol. The default value is `⇡`.
 
+## Dynamic options
+
+### `MANUAL_TERM_TITLE`
+
+When it's present, the terminal title will be set manually
+Otherwise the terminal title will be automatically set (default behaviour).
+
 ## Example
 
 ```sh
